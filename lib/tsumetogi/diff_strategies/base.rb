@@ -6,7 +6,6 @@ module Tsumetogi
     class Base
       def initialize(config = nil)
         @config = config
-puts "DiffStrategy: #{self.class}"
       end
 
       # 2つの画像ファイルの差分を計算
