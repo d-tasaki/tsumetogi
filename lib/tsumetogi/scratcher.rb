@@ -44,10 +44,10 @@ module Tsumetogi
     def slice_pages(tmp_dir)
       crop_options = []
       unless [@config.crop_x, @config.crop_y, @config.crop_w, @config.crop_h].all?(&:zero?)
-        crop_options += ["-x", (@config.crop_x * @config.resolution / 25.4).to_i.to_s] # convert cm -> dot
-        crop_options += ["-y", (@config.crop_y * @config.resolution / 25.4).to_i.to_s]
-        crop_options += ["-W", (@config.crop_w * @config.resolution / 25.4).to_i.to_s]
-        crop_options += ["-H", (@config.crop_h * @config.resolution / 25.4).to_i.to_s]
+        crop_options += ["-x", @config.crop_x.to_s]
+        crop_options += ["-y", @config.crop_y.to_s]
+        crop_options += ["-W", @config.crop_w.to_s]
+        crop_options += ["-H", @config.crop_h.to_s]
       end
 
       cmd = ["pdftoppm", "-png"]
