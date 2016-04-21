@@ -1,8 +1,12 @@
 # Tsumetogi
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/tsumetogi`. To experiment with that code, run `bin/console` for an interactive prompt.
+```text
+      ∧_∧
+    ﾐ,・_・ﾐ にゃー
+  ヾ(_ｕｕﾉ
+```
 
-TODO: Delete this and the text above, and describe your gem
+Tsumetogi slices a pdf into images in order to show the differences between current and previous versions on a SCM tool (such as GitHub, BitBucket, etc).
 
 ## Installation
 
@@ -20,19 +24,56 @@ Or install it yourself as:
 
     $ gem install tsumetogi
 
+## Dependency
+
+Tsumetogi uses [ImageMagick](http://www.imagemagick.org/) and [Poppler](https://poppler.freedesktop.org/).
+
+On Mac:
+
+```bash
+$ brew install imagemagick
+$ brew install poppler
+```
+
 ## Usage
 
-TODO: Write usage instructions here
+```bash
+$ bundle exec tsumetogi scratch pdf_path
+```
 
-## Development
+Options:
 
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment. Run `bundle exec tsumetogi` to use the gem in this directory, ignoring other installed copies of this gem.
+* `--config=path`: path to a YAML-based config file
+* `--diff_strategy=[Digest|HighAccuracy|LowMemory]`: specifies a strategy name to compare images between current and previous versions
+    * `Digest`: compares images with MD5 digest. It is so fast and low memories, but low accuracy.
+    * `HighAccuracy`: compares images with brightness average values of composed diff images. Its accuracy is high, but it consumes more memories.
+    * `LowMemory`: compares images with brightness average values of composed diff images. Its accuracy is high, but so slow.
+* `--image-dir=path`: path to a directory which will be outputed sliced images (default: <pdf_path>-images)
+* `--resolution=N`: density of sliced images (unit is dpi)
+* `--crop-x=N`, `--crop-y=N`, `--crop-w=N`, `--crop-h=N`: specifies a crop box (unit is cm). (e.g. to crop page numbers in the footer that chages frequently when you add some pages)
+* `--text`, `--no-text`: outputs a text extracted from the pdf
+* `--text_path=path`: path to a extracted text file (default: <pdf_path>.txt)
+* `--progress`, `--no-progress`: shows progresses on stdout (default: true)
+* `--verbose`, `--no-verbose`: shows debug messages on stdout (default: false)
 
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+Config file:
+
+You can specifies these options mentioned above with a YAML-based config file.
+
+e.g.
+
+```yaml
+resolution: 72
+crop_x: 0
+crop_y: 0
+crop_w: 209.97 # cm
+crop_h: 286.85 # cm
+diff_strategy: HighAccuracy
+```
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/tsumetogi.
+Bug reports and pull requests are welcome on GitHub at https://github.com/devchick/tsumetogi.
 
 
 ## License
