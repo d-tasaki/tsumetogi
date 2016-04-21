@@ -8,6 +8,7 @@ require "tsumetogi/dp_matcher"
 require "tsumetogi/logger"
 require "tsumetogi/page_num"
 require "tsumetogi/scratcher"
+require "tsumetogi/text_extractor"
 require "tsumetogi/version"
 
 module Tsumetogi

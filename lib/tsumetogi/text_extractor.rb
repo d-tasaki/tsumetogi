@@ -10,6 +10,8 @@ module Tsumetogi
     end
 
     def extract
+      Tsumetogi.logger.debug "extracting text from #{File.basename(@pdf_path)} to #{@text_path}"
+
       crop_options = []
       unless [@config.crop_x, @config.crop_y, @config.crop_w, @config.crop_h].all?(&:zero?)
         crop_options += ["-x", @config.crop_x.to_s]
